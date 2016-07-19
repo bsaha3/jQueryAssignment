@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		
+	</title>
+
+	<!-- sourcing the jquery file -->
+	<script type="text/javascript" src="jquery-3.1.0.js"></script>
+
+	<!-- Mobile viewport optimized -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		
+	<!-- Bootstrap CSS -->
+	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="includes/css/bootstrap-glyphicons.css" rel="stylesheet">
+	
+		
+	<!-- Custom CSS -->
+	<link href="includes/css/styles.css" rel="stylesheet">
+	
+		
+	<!-- Include Modernizr in the head, before any other Javascript -->
+	
+	<script src="includes/js/modernizr-2.6.2.min.js"></script>
+	
+
+</head>
+<body>
+	
+		<div class="navbar navbar-fixed-top navbar-inverse transbox head">
+			<h4>Movie DataBase</h4>
+		</div>
+
+
+
+		<div class="container">
+			<div class="well w1">
+				<form action="#" class="navbar-form">
+					<input type="text" class="form-control" placeholder="Search for movies..." id="s">
+					<button type="submit" class="btn btn-large">
+						<span class="glyphicon glyphicon-search"></span>Search
+					</button>
+				</form>		
+			</div>
+		</div>
+
+		<div class="container">
+			<table  id="info">
+				<tr>
+					<th>Title</th>
+					<th>Year</th>
+					<th>imdbID</th>
+					<th>Type</th>
+					<th>Poster</th>
+				</tr>
+			</table>
+		</div>
+
+		<script>
+
+			(function(){
+				
+			}());
+
+			$("button").click(function(){
+				$('#info').html('<tr><th>Title</th><th>Year</th><th>imdbID</th><th>Type</th><th>Poster</th></tr>');
+				
+
+				var title=$("#s").val();
+				// console.log(title);
+				$.ajax({
+					type:'GET',
+					url:'http://www.omdbapi.com/?s='+title,
+					success: function(data) {
+
+						console.log(data);
+						var trHTML = '';
+						for(var i=0;i<data.Search.length;i++)
+						{
+							
+					    	trHTML += '<tr><td>' + data.Search[i].Title + '</td><td>' + data.Search[i].Year+ '</td><td>'+ data.Search[i].imdbID+ '</td><td>'+data.Search[i].Type+'</td><td><img src="'+data.Search[i].Poster+'" alt="image not available"></td></tr>'; 
+						}
+						$('#info').append(trHTML);
+					}
+				});
+			});
+
+		</script>
+	
+</body>
+</html>
